@@ -1,41 +1,57 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import ClientAboutView from "@/components/client-view/about";
 import ClientContactView from "@/components/client-view/contact";
 import ClientExperienceAndEducationView from "@/components/client-view/experience";
 import ClientHomeView from "@/components/client-view/home";
 import ClientProjectView from "@/components/client-view/project";
 
-// Revalidate every 3600 seconds (1 hour)
-export const revalidate = 3600;
+export default function Home() {
+  const [homeSectionData, setHomeSectionData] = useState([]);
+  const [aboutSectionData, setAboutSectionData] = useState([]);
+  const [experienceSectionData, setExperienceSectionData] = useState([]);
+  const [educationSectionData, setEducationSectionData] = useState([]);
+  const [projectSectionData, setProjectSectionData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-async function extractAllDatas(currentSection) {
-  try {
-    // Use NEXT_PUBLIC_API_URL for server-side requests (works on both local and production)
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "https://next-portfolio-chi-blond.vercel.app";
-    const url = `${baseUrl}/api/${currentSection}/get`;
-    
-    const res = await fetch(url, {
-      method: "GET",
-      next: { revalidate: 3600 },
-    });
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+        
+        const [homeRes, aboutRes, experienceRes, educationRes, projectRes] = await Promise.all([
+          fetch(`${baseUrl}/api/home/get`),
+          fetch(`${baseUrl}/api/about/get`),
+          fetch(`${baseUrl}/api/experience/get`),
+          fetch(`${baseUrl}/api/education/get`),
+          fetch(`${baseUrl}/api/project/get`),
+        ]);
 
-    if (!res.ok) {
-      throw new Error(`API error: ${res.status}`);
-    }
+        const homeData = await homeRes.json();
+        const aboutData = await aboutRes.json();
+        const experienceData = await experienceRes.json();
+        const educationData = await educationRes.json();
+        const projectData = await projectRes.json();
 
-    const data = await res.json();
-    return data && data.data;
-  } catch (error) {
-    console.error(`Error fetching ${currentSection}:`, error);
-    return [];
+        setHomeSectionData(homeData.data || []);
+        setAboutSectionData(aboutData.data || []);
+        setExperienceSectionData(experienceData.data || []);
+        setEducationSectionData(educationData.data || []);
+        setProjectSectionData(projectData.data || []);
+      } catch (error) {
+        console.error("Error fetching portfolio data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllData();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-20">Loading portfolio...</div>;
   }
-}
-
-export default async function Home() {
-  const homeSectionData = await extractAllDatas("home");
-  const aboutSectionData = await extractAllDatas("about");
-  const experienceSectionData = await extractAllDatas("experience");
-  const educationSectionData = await extractAllDatas("education");
-  const projectSectionData = await extractAllDatas("project");
 
   return (
     <div>
