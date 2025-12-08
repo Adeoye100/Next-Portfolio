@@ -4,15 +4,15 @@ import ClientExperienceAndEducationView from "@/components/client-view/experienc
 import ClientHomeView from "@/components/client-view/home";
 import ClientProjectView from "@/components/client-view/project";
 
-// Revalidate every 60 seconds (ISR)
-export const revalidate = 60;
+// Revalidate every 3600 seconds (1 hour)
+export const revalidate = 3600;
 
 async function extractAllDatas(currentSection) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/${currentSection}/get`, {
+    // Use relative path instead of full URL for server-side requests
+    const res = await fetch(`/api/${currentSection}/get`, {
       method: "GET",
-      next: { revalidate: 60 }, // Use next.revalidate instead of cache
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
