@@ -32,11 +32,12 @@ export async function POST(req) {
       message: "Login successfull",
     });
   } catch (e) {
-    console.log(e);
+    console.error("Login error:", e.message, e.stack);
 
     return NextResponse.json({
       success: false,
       message: "Something goes wrong !Please try again",
+      error: process.env.NODE_ENV === "development" ? e.message : undefined,
     });
   }
 }
