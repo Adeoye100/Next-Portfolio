@@ -9,8 +9,11 @@ export const revalidate = 3600;
 
 async function extractAllDatas(currentSection) {
   try {
-    // Use relative path instead of full URL for server-side requests
-    const res = await fetch(`/api/${currentSection}/get`, {
+    // Use NEXT_PUBLIC_API_URL for server-side requests (works on both local and production)
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "https://next-portfolio-chi-blond.vercel.app";
+    const url = `${baseUrl}/api/${currentSection}/get`;
+    
+    const res = await fetch(url, {
       method: "GET",
       next: { revalidate: 3600 },
     });
