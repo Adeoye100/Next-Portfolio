@@ -6,7 +6,7 @@ import ClientProjectView from "@/components/client-view/project";
 
 async function extractAllDatas(currentSection) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
     const res = await fetch(`${baseUrl}/api/${currentSection}/get`, {
       method: "GET",
       cache: "no-store",
