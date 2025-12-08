@@ -130,7 +130,6 @@ export default function ClientHomeView({ data }) {
               <Image
                 src={aiImage}
                 alt="Profile Picture"
-                layout="responsive"
                 quality={100}
                 height={300}
                 width={300}

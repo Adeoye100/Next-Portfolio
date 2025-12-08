@@ -5,15 +5,23 @@ import ClientHomeView from "@/components/client-view/home";
 import ClientProjectView from "@/components/client-view/project";
 
 async function extractAllDatas(currentSection) {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-  const res = await fetch(`${baseUrl}/api/${currentSection}/get`, {
-    method: "GET",
-    cache: "no-store",
-  });
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+    const res = await fetch(`${baseUrl}/api/${currentSection}/get`, {
+      method: "GET",
+      cache: "no-store",
+    });
 
-  const data = await res.json();
+    if (!res.ok) {
+      throw new Error(`API error: ${res.status}`);
+    }
 
-  return data && data.data;
+    const data = await res.json();
+    return data && data.data;
+  } catch (error) {
+    console.error(`Error fetching ${currentSection}:`, error);
+    return [];
+  }
 }
 
 export default async function Home() {

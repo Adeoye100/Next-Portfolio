@@ -110,7 +110,6 @@ export default function ClientAboutView({ data }) {
             <Image
               src={aboutMeImage}
               alt="About Me"
-              layout="responsive"
               height={414}
               width={508}
               quality={100}
