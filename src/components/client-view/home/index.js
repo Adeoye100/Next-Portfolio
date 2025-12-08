@@ -83,19 +83,18 @@ export default function ClientHomeView({ data }) {
           <div className="flex flex-col justify-center items-start row-start-2 sm:row-start-1">
             <h1 className="mb-4 text-3xl lg:text-4xl xl:text-6xl font-medium leading-normal">
               {data && data.length
-                ? data[0]?.heading
-                    .split(" ")
-                    .map((item, index) => (
-                      <span
-                        className={`${
-                          index === 2 || index === 3
-                            ? "text-green-main"
-                            : "text-[#000]"
-                        }`}
-                      >
-                        {item}{" "}
-                      </span>
-                    ))
+                ? data[0]?.heading.split(" ").map((item, index) => (
+                    <span
+                      key={index}
+                      className={`${
+                        index === 2 || index === 3
+                          ? "text-green-main"
+                          : "text-[#000]"
+                      }`}
+                    >
+                      {item}{" "}
+                    </span>
+                  ))
                 : null}
             </h1>
             <p className="text-[#000] mt-4 mb-8 font-bold">

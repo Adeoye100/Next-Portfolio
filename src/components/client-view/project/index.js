@@ -1,16 +1,14 @@
 "use client";
 
-import {  useRef } from "react";
+import { useRef } from "react";
 import AnimationWrapper from "../animation-wrapper";
 import { motion, useScroll } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-
-
 export default function ClientProjectView({ data }) {
   const containerRef = useRef(null);
   const { scrollXProgress } = useScroll({ container: containerRef });
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div
@@ -22,6 +20,7 @@ export default function ClientProjectView({ data }) {
           <h1 className="leading-[70px] mb-4 text-3xl lg:text-4xl xl:text-5xl font-medium">
             {"My Projects".split(" ").map((item, index) => (
               <span
+                key={index}
                 className={`${index === 1 ? "text-green-main" : "text-[#000]"}`}
               >
                 {item}{" "}
@@ -66,22 +65,33 @@ export default function ClientProjectView({ data }) {
                             {item.createdAt.split("T")[0]}
                           </p>
                           <div className="grid gap-2 mt-5 grid-cols-2 h-full max-h-[200px] w-full">
-                            {item?.technologies.split(",").map((techItem) => (
-                              <div className="w-full flex justify-start items-center">
-                                <button className="whitespace-nowrap text-ellipsis overflow-hidden py-3 w-[120px]  px-6 border-[2px] border-green-main bg-[#fff] text-[#000] font-semibold rounded-lg text-xs tracking-widest hover:shadow-green-main transition-all outline-none">
-                                  {techItem}
-                                </button>
-                              </div>
-                            ))}
+                            {item?.technologies
+                              .split(",")
+                              .map((techItem, idx) => (
+                                <div
+                                  key={idx}
+                                  className="w-full flex justify-start items-center"
+                                >
+                                  <button className="whitespace-nowrap text-ellipsis overflow-hidden py-3 w-[120px]  px-6 border-[2px] border-green-main bg-[#fff] text-[#000] font-semibold rounded-lg text-xs tracking-widest hover:shadow-green-main transition-all outline-none">
+                                    {techItem}
+                                  </button>
+                                </div>
+                              ))}
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="absolute w-full bottom-0 justify-center flex gap-2">
-                      <button onClick={()=>router.push(item.website)} className="p-2 text-white-500 font-semibold text-[14px] tracking-widest bg-green-main transition-all outline-none">
+                      <button
+                        onClick={() => router.push(item.website)}
+                        className="p-2 text-white-500 font-semibold text-[14px] tracking-widest bg-green-main transition-all outline-none"
+                      >
                         Website
                       </button>
-                      <button onClick={()=>router.push(item.github)} className="p-2 text-white-500 font-semibold text-[14px] tracking-widest bg-green-main transition-all outline-none">
+                      <button
+                        onClick={() => router.push(item.github)}
+                        className="p-2 text-white-500 font-semibold text-[14px] tracking-widest bg-green-main transition-all outline-none"
+                      >
                         Github
                       </button>
                     </div>

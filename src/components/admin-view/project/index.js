@@ -40,8 +40,11 @@ export default function AdminProjectView({
       <div className="bg-[#ffffff] dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-10">
           {data && data.length
-            ? data.map((item) => (
-                <div className="flex flex-col gap-4 border p-4 border-green-600 dark:text-white">
+            ? data.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-4 border p-4 border-green-600 dark:text-white"
+                >
                   <p>{item.name}</p>
                   <p>{item.technologies}</p>
                   <p>{item.website}</p>

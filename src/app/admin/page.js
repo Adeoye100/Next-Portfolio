@@ -193,6 +193,7 @@ export default function AdminView() {
 
   useEffect(() => {
     extractAllDatas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSelectedTab]);
 
   function resetFormDatas() {
