@@ -7,7 +7,7 @@ async function createAdminUser() {
     await connectToDB();
 
     const username = "admin";
-    const password = "#admin001"; // Change this to your preferred password
+    const password = process.env.ADMIN_PASSWORD || "#admin001"; // Change this to your preferred password
 
     const hashedPassword = await hash(password, 12);
 
