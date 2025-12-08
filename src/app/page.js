@@ -4,12 +4,15 @@ import ClientExperienceAndEducationView from "@/components/client-view/experienc
 import ClientHomeView from "@/components/client-view/home";
 import ClientProjectView from "@/components/client-view/project";
 
+// Revalidate every 60 seconds (ISR)
+export const revalidate = 60;
+
 async function extractAllDatas(currentSection) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
     const res = await fetch(`${baseUrl}/api/${currentSection}/get`, {
       method: "GET",
-      cache: "no-store",
+      next: { revalidate: 60 }, // Use next.revalidate instead of cache
     });
 
     if (!res.ok) {
