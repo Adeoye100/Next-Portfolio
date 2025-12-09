@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AnimatedButton from "../../../app/api/login/AnimatedButton";
+import AnimatedButton from "../../ui/AnimatedButton";
 import { useTheme } from "../../../context/ThemeContext";
 import { Link as LinkScroll, scroller } from "react-scroll";
 import ThemeToggle from "../../ui/ThemeToggle";

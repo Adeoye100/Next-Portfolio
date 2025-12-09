@@ -19,14 +19,15 @@ export default function Home() {
     const fetchAllData = async () => {
       try {
         const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
-        
-        const [homeRes, aboutRes, experienceRes, educationRes, projectRes] = await Promise.all([
-          fetch(`${baseUrl}/api/home/get`),
-          fetch(`${baseUrl}/api/about/get`),
-          fetch(`${baseUrl}/api/experience/get`),
-          fetch(`${baseUrl}/api/education/get`),
-          fetch(`${baseUrl}/api/project/get`),
-        ]);
+
+        const [homeRes, aboutRes, experienceRes, educationRes, projectRes] =
+          await Promise.all([
+            fetch(`${baseUrl}/api/home/get`),
+            fetch(`${baseUrl}/api/about/get`),
+            fetch(`${baseUrl}/api/experience/get`),
+            fetch(`${baseUrl}/api/education/get`),
+            fetch(`${baseUrl}/api/project/get`),
+          ]);
 
         const homeData = await homeRes.json();
         const aboutData = await aboutRes.json();
